@@ -98,6 +98,14 @@ adult.train <- read.csv("AdultTrain.csv")
 adult.test <- read.csv("AdultTest.csv")
 
 
+# Houston, we have a problem!
+length(unique(adult.train$NativeCountry))
+length(unique(adult.test$NativeCountry))
+
+
+# We have one more NativeCountry category (R calls these "levels") in the
+# training data than we do in the testing data. Fix this up.
+levels(adult.test$NativeCountry) <- levels(adult.train$NativeCountry)
 
 
 
