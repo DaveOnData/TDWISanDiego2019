@@ -4,7 +4,7 @@
 # Authors:     Caitlin Johnson & Dave Langer
 # Description: This code was written as part of the 1-day course "Hands-on: Machine 
 #              Learning Made Easy - No, Really!" delivered at the August 2019 TDWI 
-#              Sand Diego Conference. Additional materials for the course can
+#              San Diego Conference. Additional materials for the course can
 #              be found at:
 #
 #                 https://github.com/DaveOnData/TDWISanDiego2019
@@ -35,6 +35,25 @@ library(rpart.plot)
 # NOTE - Set your working directory before runing the following.
 # Re-load adult training data.
 adult.train <- read.csv("AdultTrain.csv")
+
+
+# Let's get familiar with our data.
+str(adult.train)
+
+
+# Here's how we can check what values a categorical variable has.
+levels(adult.train$MaritalStatus)
+
+
+# Let's train our first decision tree using 3 features and visualize it.
+decision.tree.1 <- rpart(Label ~ MaritalStatus + EducationNum + HoursPerWeek + Age, data = adult.train)
+rpart.plot(decision.tree.1, type = 5, extra = 104, tweak = 1.4)
+
+
+# Let's train another tree using all the features. Notice how the tree
+# chooses only the features that are most powerful for prediction.
+decision.tree.2 <- rpart(Label ~ ., data = adult.train)
+rpart.plot(decision.tree.2, type = 5, extra = 104, tweak = 1.4)
 
 
 
@@ -78,7 +97,6 @@ first.rf
 # Caitlin to put content here.
 
 
-# A couple of tree huggers over here.
 
 
 #=======================================================================================
