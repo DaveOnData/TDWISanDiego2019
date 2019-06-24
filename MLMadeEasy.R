@@ -46,7 +46,7 @@ str(adult.train)
 levels(adult.train$MaritalStatus)
 
 
-# Let's train our first decision tree using 3 features and visualize it.
+# Let's train our first decision tree using 4 features and visualize it.
 decision.tree.1 <- rpart(Label ~ MaritalStatus + EducationNum + HoursPerWeek + Age, data = adult.train)
 prp(decision.tree.1, varlen = 14, faclen = 14, tweak = 1.2)
 
