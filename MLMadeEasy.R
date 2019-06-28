@@ -75,6 +75,9 @@ library(randomForest)
 # Time to train our first random forest. First, we want to ensure that we
 # all see the same randomness. Use set.seed() to tell R to start the 
 # ranomness from a common point.
+#
+# NOTE - We'll do this only for educational purposes! Don't do IRL.
+#
 set.seed(329324)
 # Ask the random forest algorithm to predict our label using all the 
 # available features using R's formula syntax.
@@ -201,4 +204,105 @@ confusionMatrix(rf.preds.2, adult.test$Label)
 #      Overall accuracy: 82.24%
 #      <=50k accuracy:   91.95%
 #      >50k accuracy:    76.19%
+
+
+
+#=======================================================================================
+#
+# Section 6 - Improving Our Model
+#
+#=======================================================================================
+
+# As we know, training an effective model is a process of finding the model
+# complexity "sweet spot". We can increase complexity by using more sophisticated 
+# algorithms (e.g., a single decision tree vs. a random forest) and by adding
+# features. Since we love the random forest (i.e., we're not getting rid of it), 
+# let's see if we can reduce complexity by selectively getting rid of low-importance 
+# features.
+
+# OK, we know from previous analysis that (in order) the 3 least important features
+# are Race, NativeCountry, and WorkClass. Let's remove these features.
+adult.train$Race <- NULL            
+adult.train$NativeCountry <- NULL   
+adult.train$WorkClass <- NULL       
+
+
+# Let's train a new random forest with the reduced features.
+set.seed(329324)
+random.forest.3 <- randomForest(Label ~ ., data = adult.train, importance = TRUE)
+random.forest.3
+
+
+# Check variable importance again.
+varImpPlot(random.forest.3, type = 1, scale = FALSE)
+
+
+# NOTE - For educational purposes ONLY! Do not attempt this at home! 
+# Check the new model against the test set. We don't need to remove features
+# from the test set as the random forest will ignore columns that were not
+# used in training.
+rf.preds.3 <- predict(random.forest.3, adult.test)
+confusionMatrix(rf.preds.3, adult.test$Label)
+
+
+# Sweet! Our 3rd model has increased overall accuracy of 82.81%, up from 82.24%!
+# Maybe we can improve our model a bit more. The mighty random forest says that
+# the least 2 important variables are Sex and OurFeature (gasp!). Remove these.
+adult.train$Sex <- NULL             
+adult.train$OurFeature <- NULL      
+
+
+# Let's train a new random forest with the re-reduced features.
+set.seed(329324)
+random.forest.4 <- randomForest(Label ~ ., data = adult.train, importance = TRUE)
+random.forest.4
+
+# Check variable importance again.
+varImpPlot(random.forest.4, type = 1, scale = FALSE)
+
+
+# Again, do not attempt this at home!
+# Test latest mighty random forest against the test dataset.
+rf.preds.4 <- predict(random.forest.4, adult.test)
+confusionMatrix(rf.preds.4, adult.test$Label)
+
+
+# Righteous! Our 4th model is up to 83.01% accuracy!
+# Looking at the variable importance plot it seems intuitive that there might
+# be a relationship between Age, EducationNum, and HoursPerWeek. Specifically,
+# we can hypothesize that in the US it is likely that the older, more educated,
+# and longer your work the more income you earn. Let's check this out!
+
+# Create new feature to capture the relationship between Age, EducationNum, and
+# HoursPerWeek. The straightforward way to do this is to multiply all three.
+adult.train$OurFeature2 <- adult.train$Age * adult.train$EducationNum * adult.train$HoursPerWeek  # 82.41%     82.43%     84.29%     80.77%
+
+
+# Remove the associated features as their information is redundant with the above
+# feature.
+adult.train$Age <- NULL
+adult.train$EducationNum <- NULL
+adult.train$HoursPerWeek <- NULL
+
+
+# Train one last mighty random forest.
+set.seed(329324)
+random.forest.5 <- randomForest(Label ~ ., data = adult.train, importance = TRUE)
+random.forest.5
+
+
+# Variable importance.
+varImpPlot(random.forest.5, type = 1, scale = FALSE)
+
+
+# Add our new feature to the test set. We don't need to remove any features
+# as the mighty random forest will ignore features that were not used in 
+# training.
+adult.test$OurFeature2 <- adult.test$Age * adult.test$EducationNum * adult.test$HoursPerWeek
+
+
+# Don't attempt this at home!
+# Waaahooo! Our last model is up to 83.07% accuracy!
+rf.preds.5 <- predict(random.forest.5, adult.test)
+confusionMatrix(rf.preds.5, adult.test$Label)
 
