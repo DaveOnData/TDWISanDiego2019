@@ -15,7 +15,6 @@
 #
 #                 http://archive.ics.uci.edu/ml/datasets/Adult
 #
-# NOTE - This file is provided "As-Is" and no warranty regardings its contents are
 #        offered nor implied. USE AT YOUR OWN RISK!
 #
 #=======================================================================================
@@ -110,13 +109,10 @@ varImpPlot(random.forest.1, type = 1, scale = FALSE)
 
 
 # A hallmark of machine learning is what is known as "feature engineering". 
-# Feature engineering is the process for presenting your data to machine 
 # learning algorithms in an optimal way. One of the most important forms of
 # feature engineering is the creation of new features from your data that
 # allows the ML algorithm to learn more.
 
-# We can see in the variable importance plot that the "Fnlwgt" feature is
-# the weakest feature. We also know that the Fnlwgt feature represents 
 # demographic information (e.g., age, race, education, occupation, etc.).
 # We can leverage this information as data scientists to engineer a new
 # feature by dividing Fnlwgt by Age and EducationNum to extract additional 
