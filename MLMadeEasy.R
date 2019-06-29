@@ -15,6 +15,7 @@
 #
 #                 http://archive.ics.uci.edu/ml/datasets/Adult
 #
+# NOTE - This file is provided "As-Is" and no warranty regarding its contents is
 #        offered nor implied. USE AT YOUR OWN RISK!
 #
 #=======================================================================================
@@ -38,6 +39,7 @@ adult.train <- read.csv("AdultTrain.csv")
 
 
 # Let's get familiar with our data.
+View(adult.train)
 str(adult.train)
 
 
@@ -73,6 +75,7 @@ library(randomForest)
 
 # Time to train our first random forest. First, we want to ensure that we
 # all see the same randomness. Use set.seed() to tell R to start the 
+# randomness from a common point.
 # ranomness from a common point.
 #
 # NOTE - We'll do this only for educational purposes! Don't do IRL.
@@ -109,10 +112,13 @@ varImpPlot(random.forest.1, type = 1, scale = FALSE)
 
 
 # A hallmark of machine learning is what is known as "feature engineering". 
+# Feature engineering is the process of presenting your data to machine 
 # learning algorithms in an optimal way. One of the most important forms of
 # feature engineering is the creation of new features from your data that
 # allows the ML algorithm to learn more.
 
+# We can see in the variable importance plot that "Fnlwgt" is the
+# weakest feature. We also know that the Fnlwgt feature represents 
 # demographic information (e.g., age, race, education, occupation, etc.).
 # We can leverage this information as data scientists to engineer a new
 # feature by dividing Fnlwgt by Age and EducationNum to extract additional 
