@@ -5,4 +5,4 @@ The class uses a cleaned, subsetted version of the UCI ML Repository Adult datas
 
 * [http://archive.ics.uci.edu/ml/datasets/Adult](http://archive.ics.uci.edu/ml/datasets/Adult)
 
-Detail instructions for laptop prepartion are available in the `LaptopPrepMLMadeEasy.pdf` file.
+Detailed instructions for laptop prepartion are available in the `LaptopPrepMLMadeEasy.pdf` file.
