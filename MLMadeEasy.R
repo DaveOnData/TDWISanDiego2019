@@ -47,8 +47,12 @@ str(adult.train)
 levels(adult.train$MaritalStatus)
 
 
+# Here's how we can list out all the column names within our data frame.
+names(adult.train)
+
+
 # Let's train our first decision tree using 4 features and visualize it.
-decision.tree.1 <- rpart(Label ~ MaritalStatus + EducationNum + HoursPerWeek + Age, data = adult.train)
+decision.tree.1 <- rpart(Label ~ Age + EducationNum + MaritalStatus + HoursPerWeek, data = adult.train)
 prp(decision.tree.1, varlen = 14, faclen = 14, tweak = 1.2)
 
 
